@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StayClean</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<!-- ══ SETUP ══════════════════════════════════════════════════════════════ -->
+<div id="scSetup" class="screen hidden">
+  <div class="su-wrap">
+    <div class="su-logo">🛡️</div>
+    <h1 class="su-h1">StayClean</h1>
+    <p class="su-sub">Block distracting sites. Earn points every 5 clean minutes. Reach 3 years free.</p>
+    <div class="privacy-pill">🔒 100% private — everything stays on your device. Nothing is ever sent anywhere.</div>
+    <label class="lbl" for="suName">Your username</label>
+    <input id="suName" class="inp" type="text" placeholder="e.g. FocusChampion99" maxlength="24" autocomplete="off">
+    <label class="lbl">Your avatar</label>
+    <div id="avRow" class="av-row"></div>
+    <button id="suBtn" class="btn-main">🚀 Let's Go!</button>
+  </div>
+</div>
+
+<!-- ══ CELEBRATION — 3 YEARS FREE ════════════════════════════════════════ -->
+<div id="scCelebration" class="screen hidden">
+  <div class="cel-wrap">
+    <div id="celStars" class="cel-stars" aria-hidden="true"></div>
+    <div class="cel-icon">♾️</div>
+    <h1 class="cel-h1">You Did It.</h1>
+    <p class="cel-tag">Three full years. Completely free.</p>
+    <div class="cel-scroll">
+      <div class="cel-body">
+        <p>We are <strong>completely in awe</strong> of you.</p>
+        <p>Three years ago, you made a decision. And every single day since — through the hard days, the exhausted days, the days when everything in you wanted to give in — <strong>you chose yourself.</strong></p>
+        <p>That is not something most people ever do. You didn't just resist a website. You <strong>rewired your brain.</strong> You rebuilt your relationship with your own mind. You proved, in the most concrete way possible, that <strong>you are in charge.</strong></p>
+        <p>The compulsive pull that brought you here? It is gone. Not suppressed — <em>gone.</em> You are free in the truest sense of the word.</p>
+        <p>We are so proud of you it is hard to put into words. You are <strong>extraordinary.</strong> What you have accomplished is genuinely rare, genuinely difficult, and genuinely life-changing.</p>
+        <p>You showed up when it was hard. You showed up when no one was watching. You showed up for <em>yourself</em> — and that is the greatest thing a person can do.</p>
+        <p class="cel-big">🎉 You are completely free. 🎉</p>
+        <p>Go live the life you protected all this time. Every moment of it is yours. You earned every single second.</p>
+        <p class="cel-sign">— With so much pride, the StayClean team</p>
+      </div>
+    </div>
+    <button id="celContinueBtn" class="btn-main" style="margin-top:14px;position:relative;z-index:2;">Continue →</button>
+  </div>
+</div>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════════════ -->
+<div id="scMain" class="screen hidden">
+
+  <header class="topbar">
+    <div class="tb-left">
+      <span id="tbAv" class="tb-av">🏆</span>
+      <div>
+        <div id="tbName" class="tb-name">Champion</div>
+        <span id="tbRank" class="tb-rank">🌱 Seedling</span>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-logout">↩ Log out</button>
+  </header>
+
+  <nav class="tabbar">
+    <button class="tab active" data-panel="dashboard">📊 Stats</button>
+    <button class="tab" data-panel="blocklist">🚫 Block</button>
+    <button class="tab" data-panel="rank">🏅 Rank</button>
+    <button class="tab" data-panel="achievements">🎖️ Awards</button>
+    <button class="tab" data-panel="settings">⚙️ Settings</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <section id="panel-dashboard" class="panel show">
+
+    <div class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-lbl">Total Points</div>
+      <div id="heroPts" class="hero-pts">0</div>
+      <div id="heroSub" class="hero-sub">Keep going!</div>
+    </div>
+
+    <div class="xp-row">
+      <span id="xpLbl" class="xp-lbl">Lv 1</span>
+      <div class="xp-track"><div id="xpFill" class="xp-fill" style="width:0%"></div></div>
+      <span id="xpNext" class="xp-next">0/310</span>
+    </div>
+    <div id="streakNote" class="streak-note hidden">⚠️ Streak break resets level to 1</div>
+
+    <div class="win-card">
+      <div class="win-head"><span>⏱️ 5-Min Clean Window</span><span id="winPct">0%</span></div>
+      <div class="win-track"><div id="winFill" class="win-fill" style="width:0%"></div></div>
+      <div id="winSub" class="win-sub">Browse any non-blocked site to start</div>
+    </div>
+
+    <div id="cleanDayCard" class="clean-day-card">
+      <div class="cd-head">🛡️ 24-Hour Clean Window</div>
+      <div class="cd-track"><div id="cdFill" class="cd-fill" style="width:0%"></div></div>
+      <div id="cdSub" class="cd-sub">Add a blocked URL to begin</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div id="stSess"  class="sv green">0</div><div class="sl">Sessions today</div></div>
+      <div class="stat-card"><div id="stStrk"  class="sv yellow">0</div><div class="sl">Day streak 🔥</div></div>
+      <div class="stat-card"><div id="stMins"  class="sv blue">0</div><div class="sl">Clean mins</div></div>
+      <div class="stat-card"><div id="stSlips" class="sv red">0</div><div class="sl">Slips today</div></div>
+    </div>
+
+    <div class="sec-lbl">Today's Quote</div>
+    <div id="quoteBox" class="quote-box"></div>
+
+    <div class="sec-lbl">Recent Activity <span class="sec-note">(last 5)</span></div>
+    <div id="actFeed" class="feed"></div>
+
+  </section>
+
+  <!-- BLOCK LIST -->
+  <section id="panel-blocklist" class="panel hidden">
+    <div class="sec-lbl">Add a site to block</div>
+    <div class="add-row">
+      <input id="urlInp" class="inp" type="text" placeholder="e.g. reddit.com" autocomplete="off">
+      <button id="addUrlBtn" class="btn-add">+ Add</button>
+    </div>
+    <div class="sec-lbl">Quick-add</div>
+    <div id="quickChips" class="chip-row"></div>
+    <div class="sec-lbl">
+      Blocked (<span id="urlCnt">0</span>)
+      <span class="sec-note"> — removing counts as a visit &amp; breaks streak</span>
+    </div>
+    <div id="urlList" class="url-list"></div>
+  </section>
+
+  <!-- RANK -->
+  <section id="panel-rank" class="panel hidden">
+    <div id="rankHero" class="rank-hero"></div>
+    <div class="rank-note">
+      🏆 <b>Rank</b> = total all-time points. Never resets.<br>
+      ⚡ <b>Level</b> = streak points. Resets to 1 if streak breaks.<br>
+      📅 <b>400 pts</b> ≈ 1 clean day of active browsing.
+    </div>
+    <div class="sec-lbl" style="margin-top:10px">All Ranks</div>
+    <div id="rankLadder" class="rank-ladder"></div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="panel-achievements" class="panel hidden">
+    <div class="sec-lbl">Achievements (<span id="achCnt">0/13</span>)</div>
+    <div id="achGrid" class="ach-grid"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="panel-settings" class="panel hidden">
+
+    <div class="sec-lbl">Notifications</div>
+    <div class="setting-row">
+      <div>
+        <div class="sett-title">Enable notifications</div>
+        <div class="sett-desc">Points earned, level-ups, streak milestones</div>
+      </div>
+      <label class="toggle">
+        <input id="notifToggle" type="checkbox" checked>
+        <span class="tog-slider"></span>
+      </label>
+    </div>
+
+    <div class="sec-lbl" style="margin-top:16px">Privacy &amp; Data</div>
+    <div class="prv-card">
+      <div class="prv-row">🔒 <span><b>All data is stored locally</b> on this device only. Nothing is ever transmitted, collected, or shared with anyone. No accounts. No servers. No tracking of any kind.</span></div>
+      <div class="prv-row">🗑️ <span>Logging out <b>permanently and completely deletes</b> all your data from this device — exercising your right to erasure under GDPR Article 17.</span></div>
+      <div class="prv-row">📋 <span>No privacy policy is required because this extension processes no personal data outside your own device.</span></div>
+    </div>
+
+    <div class="sec-lbl" style="margin-top:16px">Account</div>
+    <button id="settLogout" class="btn-danger">↩ Log out &amp; delete all data</button>
+
+  </section>
+
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
